@@ -1,11 +1,15 @@
+const express = require('express');
 const http = require('http')
 const https = require('https');
+const app = express();
 
-const express = require('express')
-const app = express()
-app.listen(3000, () => {
-    console.log("App listening on port 3000")
-})
+
+
+
+app.get('/', (request, response) => {
+    console.log(`URL: ${request.url}`);
+    response.send('Hello, Server!');
+});
 
 app.get("/listcoins", (request, response) => {
 
@@ -31,15 +35,16 @@ app.get("/listcoins", (request, response) => {
           })
 
         });
-
-      
-
     }).on('error', err => {
         console.log('Error: ', err.message);
     });
-
-
-    
 })
+
+// Start the server
+const server = app.listen(process.env.PORT || 5000, (error) => {
+    if (error) return console.log(`Error: ${error}`);
+ 
+    console.log(`Server listening on port ${server.address().port}`);
+});
 
 
